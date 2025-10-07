@@ -1,4 +1,4 @@
-package com.javanauta.usuario.infrastructure.business.dto;
+package com.javanauta.usuario.business.dto;
 
 import lombok.*;
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
 @Setter
 @Getter
 @Builder
-public class UsuarioDTO {
+public class UsuarioDTO  {
 
 
 
