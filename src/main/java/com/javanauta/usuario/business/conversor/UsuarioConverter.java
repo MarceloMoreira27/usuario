@@ -1,9 +1,9 @@
-package com.javanauta.usuario.infrastructure.business.conversor;
+package com.javanauta.usuario.business.conversor;
 
 
-import com.javanauta.usuario.infrastructure.business.dto.EnderecoDTO;
-import com.javanauta.usuario.infrastructure.business.dto.TelefoneDTO;
-import com.javanauta.usuario.infrastructure.business.dto.UsuarioDTO;
+import com.javanauta.usuario.business.dto.EnderecoDTO;
+import com.javanauta.usuario.business.dto.TelefoneDTO;
+import com.javanauta.usuario.business.dto.UsuarioDTO;
 import com.javanauta.usuario.infrastructure.entity.Endereco;
 import com.javanauta.usuario.infrastructure.entity.Telefone;
 import com.javanauta.usuario.infrastructure.entity.Usuario;
