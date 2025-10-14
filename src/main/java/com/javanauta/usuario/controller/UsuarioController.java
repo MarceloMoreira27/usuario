@@ -7,6 +7,7 @@ import com.javanauta.usuario.business.dto.UsuarioDTO;
 import com.javanauta.usuario.infrastructure.entity.Usuario;
 import com.javanauta.usuario.infrastructure.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Request;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -50,5 +51,11 @@ public class UsuarioController {
         return ResponseEntity.ok().build();
     }
 
+
+    @PutMapping
+    public ResponseEntity<UsuarioDTO>atualizarDadosUsuario(@RequestBody UsuarioDTO usuarioDTO,
+    @RequestHeader("Authorization" )String token){
+        return ResponseEntity.ok(usuarioService.atualizaDadosUsuario(token,usuarioDTO));
+    }
 
 }
