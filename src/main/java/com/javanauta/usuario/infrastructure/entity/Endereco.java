@@ -9,8 +9,9 @@ import lombok.*;
 @Getter
 @Setter
 @Entity
-@Table(name ="endereco")
+@Table(name ="Endereco")
 @Builder
+
 public class Endereco {
 
     @Id
