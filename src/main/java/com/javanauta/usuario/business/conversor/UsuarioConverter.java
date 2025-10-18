@@ -138,4 +138,33 @@ public class UsuarioConverter {
                 .numero(dto.getNumero() != null ? dto.getNumero() : entity.getNumero())
                 .build();
      }
+
+
+
+     public Endereco paraCadastrarEndereco(Long id, EnderecoDTO enderecoDTO){
+        return  Endereco.builder()
+                .complemento(enderecoDTO.getComplemento())
+                .estado(enderecoDTO.getEstado())
+                .rua(enderecoDTO.getRua())
+                .numero(enderecoDTO.getNumero())
+                .cep(enderecoDTO.getCep())
+                .cidade(enderecoDTO.getCidade())
+                .usuario_id(id)
+                .build();
+
+     }
+
+
+     public Telefone paraCadastrarTelefone(Long id, TelefoneDTO telefoneDTO){
+        return Telefone.builder()
+                .ddd(telefoneDTO.getDdd())
+                .numero(telefoneDTO.getNumero())
+                .usuario_id(id)
+                .build();
+     }
+
+
+
+
+
 }
