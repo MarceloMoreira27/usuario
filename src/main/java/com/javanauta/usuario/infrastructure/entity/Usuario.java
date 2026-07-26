@@ -1,17 +1,14 @@
-
-
+package com.javanauta.usuario.infrastructure.entity;
 
 import com.javanauta.usuario.infrastructure.entity.Endereco;
 import com.javanauta.usuario.infrastructure.entity.Telefone;
 import jakarta.persistence.*;
 import lombok.*;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
-
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -47,7 +44,7 @@ public class Usuario  implements UserDetails {
     }
 
     @Override
-    public @Nullable String getPassword() {
+    public String getPassword() {
         return senha;
     }
 
@@ -55,6 +52,7 @@ public class Usuario  implements UserDetails {
     public String getUsername() {
         return email;
     }
+
     // te amo muito :)
 
 
