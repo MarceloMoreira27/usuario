@@ -83,7 +83,6 @@ public class UsuarioMapper {
                 .cidade(endereco.getCidade())
                 .estado(endereco.getEstado())
                 .cep(endereco.getCep())
-                .usuario_id(endereco.getUsuario_id())
                 .build();
     }
 
@@ -97,9 +96,45 @@ public class UsuarioMapper {
 
     public TelefoneDTO paraTelefoneDTO(Telefone telefone){
         return TelefoneDTO.builder()
-                .usuario_id(telefone.getUsuario_id())
+                .id(telefone.getId())
                 .ddd(telefone.getDdd())
                 .numero(telefone.getNumero())
+                .build();
+    }
+
+    //Atualizações
+
+    public Usuario updateUsuario(Usuario entity,UsuarioDTO dto){
+        return Usuario.builder()
+                .nome(dto.getNome()   != null? dto.getNome()  : entity.getNome())
+                .email(dto.getEmail() != null? dto.getEmail() : entity.getEmail())
+                .senha(dto.getSenha() != null? dto.getSenha() : entity.getSenha())
+                .enderecos(entity.getEnderecos())
+                .telefones(entity.getTelefones())
+                .id(entity.getId())
+                .build();
+    }
+
+
+    public Endereco updateEndereco(Endereco entity, EnderecoDTO dto) {
+        return Endereco.builder()
+                .id(entity.getId())
+                .usuario_id(entity.getUsuario_id())
+                .rua(dto.getRua() != null ? dto.getRua() : entity.getRua())
+                .numero(dto.getNumero() != null ? dto.getNumero() : entity.getNumero())
+                .complemento(dto.getComplemento() != null ? dto.getComplemento() : entity.getComplemento())
+                .cidade(dto.getCidade() != null ? dto.getCidade() : entity.getCidade())
+                .estado(dto.getEstado() != null ? dto.getEstado() : entity.getEstado())
+                .cep(dto.getCep() != null ? dto.getCep() : entity.getCep())
+                .build();
+    }
+
+    public Telefone updateTelefone(Telefone entity,TelefoneDTO dto){
+        return Telefone.builder()
+                .id(entity.getId())
+                .usuario_id(entity.getUsuario_id())
+                .ddd(dto.getDdd() != null ? dto.getDdd() : entity.getDdd())
+                .numero(dto.getNumero() != null ? dto.getNumero() : entity.getNumero())
                 .build();
     }
 

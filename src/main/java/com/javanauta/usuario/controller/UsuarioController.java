@@ -1,6 +1,8 @@
 package com.javanauta.usuario.controller;
 
 import com.javanauta.usuario.business.UsuarioService;
+import com.javanauta.usuario.business.dto.EnderecoDTO;
+import com.javanauta.usuario.business.dto.TelefoneDTO;
 import com.javanauta.usuario.business.dto.UsuarioDTO;
 import com.javanauta.usuario.infrastructure.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -43,6 +45,24 @@ public class UsuarioController {
     public  ResponseEntity<Void>deletarUsuarioPorEmail(@PathVariable String email){
         usuarioService.deletarUsurioPorEmail(email);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping
+    public ResponseEntity<UsuarioDTO>atualizarUsuario(@RequestBody  UsuarioDTO usuarioDTO,
+                                                      @RequestHeader("Authorization")String token){
+        return ResponseEntity.ok(usuarioService.atualizarUsuario(usuarioDTO,token));
+    }
+
+    @PutMapping("/endereco")
+    public ResponseEntity<EnderecoDTO>atualizarEndereco(@RequestBody EnderecoDTO enderecoDTO,
+                                                        @RequestParam("id")Long id){
+        return ResponseEntity.ok(usuarioService.atualizarEndereco(id,enderecoDTO));
+    }
+
+    @PutMapping("/telefone")
+    public ResponseEntity<TelefoneDTO>atualizarTelefone(@RequestBody TelefoneDTO telefoneDTO,
+                                                        @RequestParam("id")Long id){
+        return ResponseEntity.ok(usuarioService.atualizarTelefone(id,telefoneDTO));
     }
 
 }
