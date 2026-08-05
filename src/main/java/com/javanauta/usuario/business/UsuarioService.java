@@ -8,7 +8,7 @@ import com.javanauta.usuario.infrastructure.entity.Endereco;
 import com.javanauta.usuario.infrastructure.entity.Telefone;
 import com.javanauta.usuario.infrastructure.entity.Usuario;
 import com.javanauta.usuario.infrastructure.entity.exceptions.ConflictException;
-import com.javanauta.usuario.infrastructure.entity.exceptions.ResourceNotFoundExeption;
+import com.javanauta.usuario.infrastructure.entity.exceptions.ResourceNotFoundException;
 import com.javanauta.usuario.infrastructure.repository.EnderecoRepository;
 import com.javanauta.usuario.infrastructure.repository.TelefoneRepository;
 import com.javanauta.usuario.infrastructure.repository.UsuarioRepository;
@@ -51,7 +51,7 @@ public class UsuarioService {
         try {
 
             if ( emailExiste(email)) {
-                   throw new ConflictException(" Erro de duplicidade no e-mail: " + email);
+                   throw new ConflictException("Erro de duplicidade no e-mail: " + email);
             }
 
         } catch (ConflictException e) {
@@ -61,7 +61,7 @@ public class UsuarioService {
 
     public UsuarioDTO buscarUsuarioPorEmail(String email){
         Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow(
-                ()->new ResourceNotFoundExeption("Usuario não ecnontrado: "+ email));
+                ()->new ResourceNotFoundException("Usuario não ecnontrado: "+ email));
 
         return mapper.paraUsuarioDTO(usuario);
     }
@@ -69,7 +69,7 @@ public class UsuarioService {
     @Transactional
     public void deletarUsurioPorEmail(String email){
         if(!emailExiste(email)){
-            throw new ResourceNotFoundExeption("Usuario não ecnontrado: "+ email);
+            throw new ResourceNotFoundException("Usuario não ecnontrado: "+ email);
         }
         usuarioRepository.deleteByEmail(email);
     }
@@ -80,7 +80,7 @@ public class UsuarioService {
         String email = jwtUtil.extrairEmailToken(token.substring(7));
 
         Usuario entity = usuarioRepository.findByEmail(email).orElseThrow(
-                ()-> new ResourceNotFoundExeption("Usuario não encontrado , email: "+ email)
+                ()-> new ResourceNotFoundException("Email não loacalizado! email: "+ email)
         );
 
         usuarioDTO.setSenha(usuarioDTO.getSenha() != null? usuarioDTO.getSenha() : null);
@@ -94,7 +94,7 @@ public class UsuarioService {
     public EnderecoDTO atualizarEndereco(Long id, EnderecoDTO enderecoDTO){
 
         Endereco entity = enderecoRepository.findById(id).orElseThrow(
-                ()->new ResourceNotFoundExeption("Id do endereço não encontrado!  id :" + id ));
+                ()->new ResourceNotFoundException("Id do endereço não encontrado!  id :" + id ));
 
         Endereco endereco = mapper.updateEndereco(entity,enderecoDTO);
         return mapper.paraEnderecoDTO( enderecoRepository.save(endereco));
@@ -105,11 +105,39 @@ public class UsuarioService {
     public TelefoneDTO atualizarTelefone(Long id, TelefoneDTO telefoneDTO){
 
         Telefone entity = telefoneRepository.findById(id).orElseThrow(
-                ()->new ResourceNotFoundExeption("Id do telefone não encontrado!  id :" + id ));
+                ()->new ResourceNotFoundException("Id do telefone não encontrado!  id :" + id ));
 
         Telefone telefone = mapper.updateTelefone(entity,telefoneDTO);
         return mapper.paraTelefoneDTO( telefoneRepository.save(telefone));
     }
+
+
+    @Transactional
+    public EnderecoDTO cadastraEndereco(EnderecoDTO dto ,String token){
+
+        String email = jwtUtil.extrairEmailToken(token.substring(7));
+        Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow(
+                ()-> new ResourceNotFoundException("Email não loacalizado! email: "+ email)
+        );
+
+       Endereco enderecoEntity = mapper.paraEnderecoEntity(dto, usuario.getId());
+       return mapper.paraEnderecoDTO(enderecoRepository.save(enderecoEntity));
+    }
+
+    @Transactional
+    public TelefoneDTO cadastraTelefone(TelefoneDTO  dto ,String token){
+
+        String email = jwtUtil.extrairEmailToken(token.substring(7));
+        Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow(
+                ()-> new ResourceNotFoundException("Email não loacalizado! email: "+ email)
+        );
+
+        Telefone telefoneEntity = mapper.paraTelefoneEntity(dto, usuario.getId());
+        return mapper.paraTelefoneDTO(telefoneRepository.save(telefoneEntity));
+    }
+
+
+
 
 
 }
