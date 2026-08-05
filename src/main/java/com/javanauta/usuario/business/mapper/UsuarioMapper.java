@@ -138,4 +138,26 @@ public class UsuarioMapper {
                 .build();
     }
 
+    public Endereco paraEnderecoEntity(EnderecoDTO enderecoDTO,Long usuarioId){
+        return Endereco.builder()
+                .id(enderecoDTO.getId())
+                .rua(enderecoDTO.getRua())
+                .numero(enderecoDTO.getNumero())
+                .complemento(enderecoDTO.getComplemento())
+                .cidade(enderecoDTO.getCidade())
+                .estado(enderecoDTO.getEstado())
+                .cep(enderecoDTO.getCep())
+                .usuario_id(usuarioId)
+                .build();
+    }
+
+    public Telefone paraTelefoneEntity(TelefoneDTO telefoneDTO, Long usuarioId){
+        return Telefone.builder()
+                .usuario_id(usuarioId)
+                .ddd(telefoneDTO.getDdd())
+                .numero(telefoneDTO.getNumero())
+                .build();
+    }
+
+
 }
