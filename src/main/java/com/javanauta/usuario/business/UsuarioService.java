@@ -59,6 +59,7 @@ public class UsuarioService {
         }
     }
 
+
     public UsuarioDTO buscarUsuarioPorEmail(String email){
         Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow(
                 ()->new ResourceNotFoundException("Usuario não ecnontrado: "+ email));
@@ -83,7 +84,7 @@ public class UsuarioService {
                 ()-> new ResourceNotFoundException("Email não loacalizado! email: "+ email)
         );
 
-        usuarioDTO.setSenha(usuarioDTO.getSenha() != null? usuarioDTO.getSenha() : null);
+        usuarioDTO.setSenha(usuarioDTO.getSenha() != null? passwordEncoder.encode(usuarioDTO.getSenha()) : null);
 
         Usuario usuario = mapper.updateUsuario(entity,usuarioDTO);
         return mapper.paraUsuarioDTO(usuarioRepository.save(usuario));
@@ -135,6 +136,8 @@ public class UsuarioService {
         Telefone telefoneEntity = mapper.paraTelefoneEntity(dto, usuario.getId());
         return mapper.paraTelefoneDTO(telefoneRepository.save(telefoneEntity));
     }
+
+
 
 
 
